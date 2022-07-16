@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -117,7 +118,16 @@ public class MainManager : MonoBehaviour
     {
         GameManager.Instance.SetBestScore(m_Points);
         m_GameOver = true;
-/*        FinalScore.text = "Best Score : " + setName(GameManager.Instance.nameInput) + " : " + m_Points; */
         GameOverText.SetActive(true);
+    }
+
+    public void QuitGame()
+    {
+        GameManager.Instance.SaveGameInfo();
+#if UNITY_EDITOR
+        EditorApplication.ExitPlaymode();
+#else
+        Application.Quit();
+#endif
     }
 }
