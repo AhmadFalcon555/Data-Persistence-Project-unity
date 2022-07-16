@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using UnityEditor;
 using System.IO;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 public class GameManager : MonoBehaviour
 {
@@ -29,11 +31,13 @@ public class GameManager : MonoBehaviour
         }
         Instance = this;
         DontDestroyOnLoad(gameObject);
+
+        LoadGameInfo();
     }
 
     private void Start()
     {
-        if(bestName == "")
+        if (bestName != "") // start pertama kali, kalo emang ada yang bisa diload, bakal dimunculin dibawah
         {
             bestScoreText.text = "Best Score : " + bestName + " : " + bestScore;
         }

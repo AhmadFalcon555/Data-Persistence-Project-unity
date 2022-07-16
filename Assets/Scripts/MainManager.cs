@@ -12,7 +12,10 @@ public class MainManager : MonoBehaviour
 
     public Text ScoreText;
     public Text FinalScore;
+    public Text nameText;
     public GameObject GameOverText;
+    public GameObject pausePanel;
+    [SerializeField] private bool pause = false;
     
     private bool m_Started = false;
     private int m_Points;
@@ -31,6 +34,7 @@ public class MainManager : MonoBehaviour
         }
         mainManager = this;
         GameManager.Instance.LoadGameInfo();
+        nameText.text = "Player Name : " + GameManager.Instance.name;
         FinalScore.text = "Best Score : " + GameManager.Instance.bestName + " : " + GameManager.Instance.bestScore;
     }
     void Start()
@@ -73,6 +77,34 @@ public class MainManager : MonoBehaviour
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
             }
         }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            /*            if (!wantToPause)
+                        {
+                            pausePanel.SetActive(true);
+                            Time.timeScale = 0;
+                            wantToPause = true;
+                            Debug.Log("msuk ke !wantupaus");
+                        }
+                        else
+                            wantToPause = false;
+                        Time.timeScale = 1;
+                        pausePanel.SetActive(false);
+                        Debug.Log("overall udha bisaa masauk");*/
+            if(!pause)
+            {
+                pausePanel.SetActive(true);
+                pause = true;
+                Time.timeScale = 0;
+            }else if(pause)
+            {
+                pausePanel.SetActive(false);
+                pause = false;
+                Time.timeScale = 1;   
+            }
+        }
+
     }
 
     void AddPoint(int point)
